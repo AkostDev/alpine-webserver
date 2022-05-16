@@ -5,7 +5,7 @@ Docker container in Alpine image with PHP 8 and NGINX 1.20
 
 1. Clone this repository
 2. Change config files in directory `config`
-3. Run `docker build -t alpine-server:latest . --no-cache`
+3. Run `docker build -t alpine-webserver:latest . --no-cache`
 
 ## Example _docker-compose.yml_
 
