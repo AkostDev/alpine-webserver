@@ -33,5 +33,7 @@ RUN apk add --no-cache --virtual build-essentials \
     docker-php-ext-install exif && \
     docker-php-ext-install zip
 
+COPY config/cron /etc/crontabs/root
+
 EXPOSE 80
 CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]
