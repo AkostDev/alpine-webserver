@@ -15,11 +15,10 @@ COPY config/supervisord.ini /etc/supervisor.d/supervisord.ini
 
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/
-COPY config/nginx-laravel.conf /etc/nginx/modules/
-RUN mkdir -p /run/nginx/
-RUN touch /run/nginx/nginx.pid
-RUN ln -sf /dev/stdout /var/log/nginx/access.log
-RUN ln -sf /dev/stderr /var/log/nginx/error.log
+RUN mkdir -p /run/nginx/ \
+    && touch /run/nginx/nginx.pid \
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN set -ex && apk --no-cache add postgresql-dev
 RUN docker-php-ext-install pgsql pdo_mysql pdo_pgsql
@@ -33,7 +32,7 @@ RUN apk add --no-cache --virtual build-essentials \
     docker-php-ext-install exif && \
     docker-php-ext-install zip
 
-COPY config/cron /etc/crontabs/root
+COPY config/cron /var/spool/cron/crontabs/root
 
 EXPOSE 80
-CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]
+CMD ["supervisord", "-n", "-c", "/etc/supervisor.d/supervisord.ini"]
